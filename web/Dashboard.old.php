@@ -3,9 +3,7 @@
 	'gc_maxlifetime' => 286400,
 ]);
 include("../func/bc-config.php");
-include("../func/modern-header.php");
 
-<?php
 $select_user_vendor_status_message = mysqli_query($connection_server, "SELECT * FROM sas_vendor_status_messages WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "'");
 if (mysqli_num_rows($select_user_vendor_status_message) == 1) {
 	$get_user_vendor_status_message = mysqli_fetch_array($select_user_vendor_status_message);
@@ -354,120 +352,266 @@ if ((!empty($select_vendor_table["bank_code"]) && is_numeric($select_vendor_tabl
 
 }
 ?>
+<!DOCTYPE html>
 
-<div class="container-fluid">
-    <div class="row">
-        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            <div class="position-sticky">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Transactions
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Fund Wallet
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Airtime
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Data
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Cable TV
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Electricity
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Profile
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout.php">
-                            Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+<head>
+	<title>Dashboard | <?php echo $get_all_site_details["site_title"]; ?></title>
+	<meta charset="UTF-8" />
+	<meta name="description" content="<?php echo substr($get_all_site_details["site_desc"], 0, 160); ?>" />
+	<meta http-equiv="Content-Type" content="text/html; " />
+	<meta name="theme-color" content="black" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<link rel="stylesheet" href="<?php echo $css_style_template_location; ?>">
+	<link rel="stylesheet" href="/cssfile/bc-style.css">
+	<meta name="author" content="BeeCodes Titan">
+	<meta name="dc.creator" content="BeeCodes Titan">
+</head>
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">Dashboard</h1>
-            </div>
+<body>
+	<?php include("../func/bc-header.php"); ?>
+	<div style="user-select: auto;"
+		class="bg-3 m-flex-column-dp s-flex-row-dp m-width-100 s-width-100 m-height-30rem s-height-65 m-margin-bm-2 s-margin-bm-2">
+		<div style=""
+			class="bg-3 m-block-dp s-inline-block-dp m-position-rel s-position-rel m-width-96 s-width-48 m-height-100 s-height-100 m-margin-lt-2 s-margin-lt-2 m-margin-bm-2 s-margin-bm-0">
+			<div style=""
+				class="color-4 bg-10 br-radius-5px box-shadow m-inline-block-dp s-inline-block-dp m-width-100 s-width-100 m-height-100 s-height-100">
+				<div style="text-align: left;"
+					class="bg-3 text-bold-300 m-font-size-16 s-font-size-20 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-width-95 s-width-95 m-height-auto s-height-auto m-position-rel s-position-rel m-margin-tp-2 s-margin-tp-2 m-margin-lt-2 s-margin-lt-2">
+					Welcome,
+					<?php echo strtoupper($get_logged_user_details["firstname"] . " " . $get_logged_user_details["lastname"]) . checkIfEmpty(ucwords($get_logged_user_details["othername"]), ", ", ""); ?>
+				</div>
+				<div style="text-align: left;"
+					class="bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px m-block-dp s-block-dp m-scroll-none s-scroll-none m-width-94 s-width-94 m-height-auto s-height-auto m-margin-lt-2 s-margin-lt-2 m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-padding-tp-1 s-padding-tp-2 m-padding-bm-1 s-padding-bm-2 m-margin-tp-1 s-margin-tp-1 m-margin-bm-1 s-margin-bm-1">
+					<span class="m-font-size-14 s-font-size-18">BALANCE: <span
+							class="color-10 text-bold-600"><?php echo toDecimal($get_logged_user_details["balance"], "2"); ?></span>,
+						ACCOUNT LEVEL: <span
+							class="color-10 text-bold-600"><?php echo accountLevel($get_logged_user_details["account_level"]); ?></span></span>
+				</div>
+				<div style="text-align: left;"
+					class="bg-3 m-block-dp s-block-dp m-scroll-none s-scroll-none m-flex-column-dp s-flex-row-dp m-width-97 s-width-96 m-height-31 s-height-31 m-margin-lt-2 s-margin-lt-2 m-padding-lt-0 s-padding-lt-0 m-padding-rt-0 s-padding-rt-0 m-padding-tp-1 s-padding-tp-3 m-padding-bm-1 s-padding-bm-3 m-margin-tp-1 s-margin-tp-1 m-margin-bm-1 s-margin-bm-0">
+					<a href="<?php echo $web_http_host; ?>/web/Fund.php" class="">
+						<div style="text-align: center;"
+							class="a-cursor color-4 bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px box-shadow onhover-bg-color-10 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-flex-row-dp s-flex-row-dp m-width-48 s-width-48 m-height-48 s-height-49 m-margin-rt-1 s-margin-rt-1 m-margin-bm-1 s-margin-bm-1">
+							<img src="<?php echo $web_http_host; ?>/asset/pay.png"
+								style="pointer-events: none; object-fit: contain; object-position: center;"
+								class="bg-10 br-radius-5px box-shadow m-inline-block-dp s-inline-block-dp m-width-10 s-width-10 m-height-100 s-height-50 m-margin-tp-0 s-margin-tp-5 m-margin-bm-1 s-margin-bm-0" />
+							<div style="text-align: left;"
+								class="bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-inline-block-dp s-inline-block-dp m-width-75 s-width-75 m-height-auto s-height-auto m-margin-tp-0 s-margin-tp-0 m-margin-bm-6 s-margin-bm-0 m-margin-lt-3 s-margin-lt-3">
+								FUND WALLET
+							</div>
+						</div>
+					</a>
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Balance</h5>
-                            <p class="card-text">N<?php echo toDecimal($get_logged_user_details["balance"], "2"); ?></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Account Level</h5>
-                            <p class="card-text"><?php echo accountLevel($get_logged_user_details["account_level"]); ?></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+					<a href="<?php echo $web_http_host; ?>/web/ShareFund.php" class="">
+						<div style="text-align: center;"
+							class="a-cursor color-4 bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px box-shadow onhover-bg-color-10 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-flex-row-dp s-flex-row-dp m-width-48 s-width-48 m-height-48 s-height-49 m-margin-lt-1 s-margin-lt-1 m-margin-bm-1 s-margin-bm-1">
+							<img src="<?php echo $web_http_host; ?>/asset/share-icon.svg"
+								style="pointer-events: none; object-fit: contain; object-position: center;"
+								class="bg-10 br-radius-5px box-shadow m-inline-block-dp s-inline-block-dp m-width-10 s-width-10 m-height-100 s-height-50 m-margin-tp-0 s-margin-tp-5 m-margin-bm-1 s-margin-bm-0" />
+							<div style="text-align: left;"
+								class="bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-inline-block-dp s-inline-block-dp m-width-75 s-width-75 m-height-auto s-height-auto m-margin-tp-0 s-margin-tp-0 m-margin-bm-6 s-margin-bm-0 m-margin-lt-3 s-margin-lt-3">
+								SHARE FUND
+							</div>
+						</div>
+					</a>
 
-            <h2 class="mt-4">Quick Actions</h2>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Airtime</h5>
-                            <p class="card-text">Buy airtime for any network.</p>
-                            <a href="/web/Airtime.php" class="btn btn-primary">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Data</h5>
-                            <p class="card-text">Buy data for any network.</p>
-                            <a href="/web/Data.php" class="btn btn-primary">Buy Now</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Cable TV</h5>
-                            <p class="card-text">Pay your cable TV subscription.</p>
-                            <a href="/web/Cable.php" class="btn btn-primary">Pay Now</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+					<a href="<?php echo $web_http_host; ?>/web/SubmitPayment.php" class="">
+						<div style="text-align: center;"
+							class="a-cursor color-4 bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px box-shadow onhover-bg-color-10 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-flex-row-dp s-flex-row-dp m-width-48 s-width-48 m-height-48 s-height-49 m-margin-rt-1 s-margin-rt-1 m-margin-bm-1 s-margin-bm-1">
+							<img src="<?php echo $web_http_host; ?>/asset/cart-icon.png"
+								style="pointer-events: none; object-fit: contain; object-position: center;"
+								class="bg-10 br-radius-5px box-shadow m-inline-block-dp s-inline-block-dp m-width-10 s-width-10 m-height-100 s-height-50 m-margin-tp-0 s-margin-tp-5 m-margin-bm-1 s-margin-bm-0" />
+							<div style="text-align: left;"
+								class="bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-inline-block-dp s-inline-block-dp m-width-75 s-width-75 m-height-auto s-height-auto m-margin-tp-0 s-margin-tp-0 m-margin-bm-6 s-margin-bm-0 m-margin-lt-3 s-margin-lt-3">
+								SUBMIT PAYMENT
+							</div>
+						</div>
+					</a>
 
-        </main>
-    </div>
-</div>
+					<a href="<?php echo $web_http_host; ?>/web/Transactions.php" class="">
+						<div style="text-align: center;"
+							class="a-cursor color-4 bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px box-shadow onhover-bg-color-10 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-flex-row-dp s-flex-row-dp m-width-48 s-width-48 m-height-48 s-height-49 m-margin-lt-1 s-margin-lt-1 m-margin-bm-1 s-margin-bm-1">
+							<img src="<?php echo $web_http_host; ?>/asset/transactions.png"
+								style="pointer-events: none; object-fit: contain; object-position: center;"
+								class="bg-10 br-radius-5px box-shadow m-inline-block-dp s-inline-block-dp m-width-10 s-width-10 m-height-100 s-height-50 m-margin-tp-0 s-margin-tp-5 m-margin-bm-1 s-margin-bm-0" />
+							<div style="text-align: left;"
+								class="bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-inline-block-dp s-inline-block-dp m-width-75 s-width-75 m-height-auto s-height-auto m-margin-tp-0 s-margin-tp-0 m-margin-bm-6 s-margin-bm-0 m-margin-lt-3 s-margin-lt-3">
+								TRANSACTIONS
+							</div>
+						</div>
+					</a>
+				</div>
+				<div style="text-align: left;"
+					class="bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-width-45 s-width-44 m-height-auto s-height-auto m-margin-lt-2 s-margin-lt-2 m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-padding-tp-1 s-padding-tp-3 m-padding-bm-1 s-padding-bm-3 m-margin-tp-1 s-margin-tp-1 m-margin-bm-1 s-margin-bm-1">
+					<span class="color-4 m-font-size-14 s-font-size-16">Total Fund:
+						<span class="color-10 text-bold-600">
+							<?php
+							$get_all_user_credit_transaction_details = mysqli_query($connection_server, "SELECT * FROM sas_transactions WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && username='" . $get_logged_user_details["username"] . "' && (type_alternative LIKE '%credit%' OR type_alternative LIKE '%received%' OR type_alternative LIKE '%commission%')");
+							if (mysqli_num_rows($get_all_user_credit_transaction_details) >= 1) {
+								while ($transaction_record = mysqli_fetch_assoc($get_all_user_credit_transaction_details)) {
+									$all_user_credit_transaction += $transaction_record["discounted_amount"];
+								}
+								echo toDecimal($all_user_credit_transaction, 2);
+							} else {
+								echo toDecimal(0, 2);
+							}
+							?>
+						</span>
+					</span>
+				</div>
+				<div style="text-align: left;"
+					class="bg-2 br-color-2 br-style-bm-1 br-width-3 br-radius-5px m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-width-44 s-width-44 m-height-auto s-height-auto m-margin-lt-2 s-margin-lt-2 m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-padding-tp-1 s-padding-tp-3 m-padding-bm-1 s-padding-bm-3 m-margin-tp-1 s-margin-tp-1 m-margin-bm-1 s-margin-bm-1">
+					<span class="color-4 m-font-size-14 s-font-size-16">Total Spent:
+						<span class="color-10 text-bold-600">
+							<?php
+							$get_all_user_debit_transaction_details = mysqli_query($connection_server, "SELECT * FROM sas_transactions WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && username='" . $get_logged_user_details["username"] . "' && (type_alternative NOT LIKE '%credit%' && type_alternative NOT LIKE '%refund%' && type_alternative NOT LIKE '%received%' && type_alternative NOT LIKE '%commission%' && status NOT LIKE '%3%')");
+							if (mysqli_num_rows($get_all_user_debit_transaction_details) >= 1) {
+								while ($transaction_record = mysqli_fetch_assoc($get_all_user_debit_transaction_details)) {
+									$all_user_debit_transaction += $transaction_record["discounted_amount"];
+								}
+								echo toDecimal($all_user_debit_transaction, 2);
+							} else {
+								echo toDecimal(0, 2);
+							}
+							?>
+						</span>
+					</span>
+				</div>
+				<div style="text-align: left;"
+					class="bg-3 br-radius-5px m-block-dp s-block-dp m-scroll-none s-scroll-none m-width-94 s-width-94 m-height-auto s-height-auto m-margin-lt-2 s-margin-lt-2 m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-padding-tp-1 s-padding-tp-1 m-padding-bm-1 s-padding-bm-1 m-margin-tp-1 s-margin-tp-1 m-margin-bm-1 s-margin-bm-1">
+					<span class="color-4 m-font-size-14 s-font-size-16">Refer and Earn Big, copy referral link <span
+							class="a-cursor color-4 text-bold-600 br-radius-5px br-width-3 br-style-bm-5 br-color-10 onhover-bg-color-10 m-font-size-18 s-font-size-20"
+							onclick="copyReferLink();" title="Click To Copy">Copy Link</span></span>
+				</div>
+				<script>
+					let ReferLink = '<?php echo $web_http_host . "/web/Register.php?referral=" . $get_logged_user_details["username"]; ?>';
+					const copyReferLink = async () => {
+						try {
+							await navigator.clipboard.writeText(ReferLink);
+							alert('Content copied to clipboard');
+						} catch (err) {
+							alert('Failed to copy: ' + err);
+						}
+					}
+				</script>
+			</div>
+		</div>
+		<div style="text-align: center;"
+			class="color-2 bg-3 m-block-dp s-inline-block-dp m-position-rel s-position-rel m-width-96 s-width-48 m-height-100 s-height-100 m-margin-lt-2 s-margin-lt-0 m-margin-rt-0 s-margin-rt-2 m-margin-bm-2 s-margin-bm-0">
+			<a href="<?php echo $web_http_host; ?>/web/Airtime.php" class="">
+				<div style="text-align: center;"
+					class="a-cursor color-2 bg-10 br-radius-5px box-shadow onhover-bg-color-4 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-width-48 s-width-48 m-height-48 s-height-48 m-margin-rt-1 s-margin-rt-1 m-margin-bm-1 s-margin-bm-1">
+					<img src="<?php echo $web_http_host; ?>/asset/airtime.svg"
+						style="pointer-events: none; object-fit: contain; object-position: center;"
+						class="m-width-25 s-width-35 m-height-60 s-height-60 m-margin-tp-6 s-margin-tp-6 m-margin-bm-1 s-margin-bm-1" />
+					<div
+						class="color-4 bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-block-dp s-inline-block-dp m-width-100 s-width-100">
+						BUY AIRTIME
+					</div>
+				</div>
+			</a>
 
-<?php
-include("../func/modern-footer.php");
-?>
+			<a href="<?php echo $web_http_host; ?>/web/Data.php" class="">
+				<div style="text-align: center;"
+					class="a-cursor color-2 bg-10 br-radius-5px box-shadow onhover-bg-color-4 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-width-48 s-width-48 m-height-48 s-height-48 m-margin-lt-1 s-margin-lt-1 m-margin-bm-1 s-margin-bm-1">
+					<img src="<?php echo $web_http_host; ?>/asset/data.png"
+						style="pointer-events: none; object-fit: contain; object-position: center;"
+						class="m-width-25 s-width-35 m-height-60 s-height-60 m-margin-tp-6 s-margin-tp-6 m-margin-bm-1 s-margin-bm-1" />
+					<div
+						class="color-4 bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-block-dp s-inline-block-dp m-width-100 s-width-100">
+						BUY DATA
+					</div>
+				</div>
+			</a>
+
+			<a href="<?php echo $web_http_host; ?>/web/Cable.php" class="">
+				<div style="text-align: center;"
+					class="a-cursor color-2 bg-10 br-radius-5px box-shadow onhover-bg-color-4 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-width-48 s-width-48 m-height-48 s-height-48 m-margin-rt-1 s-margin-rt-1 m-margin-tp-1 s-margin-tp-1">
+					<img src="<?php echo $web_http_host; ?>/asset/cable.png"
+						style="pointer-events: none; object-fit: contain; object-position: center;"
+						class="m-width-25 s-width-35 m-height-60 s-height-60 m-margin-tp-6 s-margin-tp-6 m-margin-bm-1 s-margin-bm-1" />
+					<div
+						class="color-4 bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-block-dp s-inline-block-dp m-width-100 s-width-100">
+						BUY CABLE
+					</div>
+				</div>
+			</a>
+
+			<a href="<?php echo $web_http_host; ?>/web/Electric.php" class="">
+				<div style="text-align: center;"
+					class="a-cursor color-2 bg-10 br-radius-5px box-shadow onhover-bg-color-4 m-inline-block-dp s-inline-block-dp m-scroll-none s-scroll-none m-scroll-initial s-scroll-initial m-width-48 s-width-48 m-height-48 s-height-48 m-margin-lt-1 s-margin-lt-1 m-margin-tp-1 s-margin-tp-1">
+					<img src="<?php echo $web_http_host; ?>/asset/utility.png"
+						style="pointer-events: none; object-fit: contain; object-position: center;"
+						class="m-width-25 s-width-35 m-height-60 s-height-60 m-margin-tp-6 s-margin-tp-6 m-margin-bm-1 s-margin-bm-1" />
+					<div
+						class="color-4 bg-3 text-bold-500 m-font-size-12 s-font-size-14 m-scroll-x s-scroll-x m-block-dp s-inline-block-dp m-width-100 s-width-100">
+						BUY ELECTRIC
+					</div>
+				</div>
+			</a>
+		</div>
+	</div>
+
+	<div style="text-align: center;"
+		class="bg-10 m-block-dp s-block-dp m-position-rel s-position-rel br-radius-5px m-width-94 s-width-94 m-height-auto s-height-auto m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-padding-tp-5 s-padding-tp-3 m-padding-bm-5 s-padding-bm-3 m-margin-lt-2 s-margin-lt-2 m-margin-bm-2 s-margin-bm-2">
+		<span style="user-select: auto;" class="text-bg-1 color-4 text-bold-500 m-font-size-20 s-font-size-25">UPGRADE
+			ACCOUNT</span><br>
+		<form method="post" action="">
+			<select style="text-align: center;" id="" name="upgrade-type" onchange=""
+				class="select-box outline-none color-4 bg-2 m-inline-block-dp s-inline-block-dp outline-none br-radius-5px br-width-4 br-color-4 m-width-63 s-width-47 m-padding-tp-2 s-padding-tp-1 m-padding-bm-2 s-padding-bm-1 m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-margin-bm-1 s-margin-bm-1"
+				required />
+			<option value="" default hidden selected>Choose Account Level</option>
+			<?php
+			if (!empty($get_logged_user_details["account_level"])) {
+				$account_level_upgrade_array = array(1 => "smart", 2 => "agent");
+				foreach ($account_level_upgrade_array as $index => $account_levels) {
+					if ($index > $get_logged_user_details["account_level"]) {
+						$get_upgrade_price = mysqli_fetch_array(mysqli_query($connection_server, "SELECT * FROM sas_user_upgrade_price WHERE vendor_id='" . $get_logged_user_details["vendor_id"] . "' && account_type='" . $index . "' LIMIT 1"));
+						echo '<option value="' . $account_levels . '">' . accountLevel($index) . ' @ N' . toDecimal($get_upgrade_price["price"], 2) . '</option>';
+					}
+				}
+			}
+			?>
+			</select><br />
+			<button id="" name="upgrade-user" type="submit" style="user-select: auto;"
+				class="button-box a-cursor outline-none color-2 bg-4 m-inline-block-dp s-inline-block-dp outline-none onhover-bg-color-10 br-radius-5px br-width-4 br-color-4 m-width-63 s-width-47 m-padding-tp-2 s-padding-tp-1 m-padding-bm-2 s-padding-bm-1 m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-margin-bm-1 s-margin-bm-1">
+				Upgrade Account
+			</button>
+		</form>
+	</div>
+
+	<div style="text-align: center;"
+		class="bg-10 m-block-dp s-block-dp m-position-rel s-position-rel m-scroll-x s-scroll-x br-radius-5px m-width-94 s-width-94 m-height-auto s-height-auto m-padding-lt-1 s-padding-lt-1 m-padding-rt-1 s-padding-rt-1 m-padding-tp-5 s-padding-tp-3 m-padding-bm-5 s-padding-bm-3 m-margin-lt-2 s-margin-lt-2 m-margin-bm-2 s-margin-bm-2">
+		<span style="user-select: auto;" class="text-bg-1 color-4 text-bold-500 m-font-size-20 s-font-size-25">INSTANT FUNDING VIA BANK TRANSFER
+			</span><br>
+		<?php
+		echo $virtual_account_vaccount_err;
+		?>
+
+	</div>
+	<?php
+	// $vpay_access = json_decode(getUserVpayAccessToken());
+	// $curl_url = "https://services2.vpay.africa/api/service/v1/query/bank/list/show";
+	// $curl_request = curl_init($curl_url);
+	// curl_setopt($curl_request, CURLOPT_HTTPGET, true);
+
+	// // $post_field_array = array("username" => $vpay_merchant_username, "password" => $vpay_merchant_password);
+	// // curl_setopt($curl_request, CURLOPT_POSTFIELDS, json_encode($post_field_array, true));
+	// curl_setopt($curl_request, CURLOPT_RETURNTRANSFER, true);
+
+	// $header_field_array = array("b-access-token: ".$vpay_access["token"], "publicKey: 9ddfe4b6-3d00-4ace-86d0-393568a306b6", "Content-Type: application/json");
+	// curl_setopt($curl_request, CURLOPT_HTTPHEADER, $header_field_array);
+	// curl_setopt($curl_request, CURLOPT_TIMEOUT, 60);
+
+	// curl_setopt($curl_request, CURLOPT_SSL_VERIFYHOST, false);
+	// curl_setopt($curl_request, CURLOPT_SSL_VERIFYPEER, false);
+	// $curl_result = curl_exec($curl_request);
+	// $curl_json_result = json_decode($curl_result, true);
+	// var_dump($curl_json_result);
+	?>
+	<?php include("../func/short-trans.php"); ?>
+	<?php include("../func/bc-footer.php"); ?>
+
+</body>
+
+</html>
